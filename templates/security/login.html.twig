@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<br/>
+<br/>
+<div class="container">
+        <div class="row">
+            <div class="col-3">
+    <form method="post">
+
+    <div id = "formConexion">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+            
+           <p>Si vous n'êtes pas inscrit cliquez<a href="{{path("visiteur_new")}}"> ici</a>
+
+<br/>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block title %}New Visiteur{% endblock %}
+
+{% block body %}
+    
+    <div class="container">
+        <div class="col-7">
+          <h1>S'inscrire</h1>
+    {{ include('visiteur/_form.html.twig') }}
+        </div>
+    </div>
+    <a href="{{ path('visiteur_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon espace{% endblock %}
+
+{% block body %}
+    
+    <div class="container-fluid">
+     <div class="row">
+        <div class="col">
+            <div> <a style="color:red;" href="{{path('Renseigner')}}"> Créer une fiche de frais</a></div>
+        </div>
+        <div class="col">
+            <div style="color:blue;" > <a href="{{ path('fichefrais_index') }}">Consulter mes fiches de frais</a></div>
+        </div>
+     </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nouvelle Lignefraisforfait{% endblock %}
+
+{% block body %}
+
+    <h1>Créer une nouvelle LignefraisHorsforfait</h1>
+    {{ form_start(form1) }}
+
+    {{form_row(form1.idvisiteur, {'value' : app.session.get('visiteur').id}) }}
+
+     {{form_row(form1.mois)}}
+      {{form_row(form1.libelle)}}
+       {{form_row(form1.date)}}
+        {{form_row(form1.montant)}}
+    {{ form_end(form1) }}
+
+    <h1>Créer une nouvelle Lignefraisforfait</h1>
+    {{ form_start(form2) }}
+
+    {{form_row(form2.idvisiteur, {'value' : app.session.get('visiteur').id}) }}
+
+    {{form_row(form2.mois)}}
+      {{form_row(form2.idfraisforfait)}}
+       {{form_row(form2.quantite)}}
+        {{form_row(form2.montant)}}
+        {{dump(form2.vars.value.idfraisforfait) }}
+    {{ form_end(form2) }}
+
+{% endblock %}

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Lignefraishorsforfait
  *
- * @ORM\Table(name="lignefraishorsforfait", indexes={@ORM\Index(name="idVisiteur", columns={"idVisiteur", "mois"})})
+ * @ORM\Table(name="lignefraishorsforfait", indexes={@ORM\Index(name="idDoc", columns={"idDoc"}), @ORM\Index(name="idVisiteur", columns={"idVisiteur"})})
  * @ORM\Entity
  */
 class Lignefraishorsforfait
@@ -27,7 +27,7 @@ class Lignefraishorsforfait
      * @ORM\Column(name="mois", type="string", length=6, nullable=false, options={"fixed"=true})
      */
     private $mois;
-    
+
     /**
      * @var string|null
      *
@@ -50,19 +50,54 @@ class Lignefraishorsforfait
     private $montant;
 
     /**
-     * @var \Fichefrais
+     * @var \Document
      *
-     * @ORM\ManyToOne(targetEntity="Fichefrais")
+     * @ORM\ManyToOne(targetEntity="Document")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idVisiteur", referencedColumnName="idVisiteur"),
-     *   @ORM\JoinColumn(name="mois", referencedColumnName="mois")
+     *   @ORM\JoinColumn(name="idDoc", referencedColumnName="idJustificatif")
+     * })
+     */
+    private $iddoc;
+
+    /**
+     * @var \Visiteur
+     *
+     * @ORM\ManyToOne(targetEntity="Visiteur")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idVisiteur", referencedColumnName="id")
      * })
      */
     private $idvisiteur;
 
+    private $fichier;
+
+    public function getFichier(): ?string
+    {
+        return $this->fichier;
+    }
+
+    public function setFichier(string $mois): self
+    {
+        $this->fichier = $fichier;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getMois(): ?string
+    {
+        return $this->mois;
+    }
+
+    public function setMois(string $mois): self
+    {
+        $this->mois = $mois;
+
+        return $this;
     }
 
     public function getLibelle(): ?string
@@ -73,17 +108,6 @@ class Lignefraishorsforfait
     public function setLibelle(?string $libelle): self
     {
         $this->libelle = $libelle;
-
-        return $this;
-    }
-    public function getMois(): ?string
-    {
-        return $this->mois;
-    }
-
-    public function setMois(string $mois): self
-    {
-        $this->mois = $mois;
 
         return $this;
     }
@@ -112,12 +136,24 @@ class Lignefraishorsforfait
         return $this;
     }
 
-    public function getIdvisiteur(): ?Fichefrais
+    public function getIddoc(): ?Document
+    {
+        return $this->iddoc;
+    }
+
+    public function setIddoc(?Document $iddoc): self
+    {
+        $this->iddoc = $iddoc;
+
+        return $this;
+    }
+
+    public function getIdvisiteur(): ?Visiteur
     {
         return $this->idvisiteur;
     }
 
-    public function setIdvisiteur(?Fichefrais $idvisiteur): self
+    public function setIdvisiteur(?Visiteur $idvisiteur): self
     {
         $this->idvisiteur = $idvisiteur;
 
@@ -126,4 +162,3 @@ class Lignefraishorsforfait
 
 
 }
-

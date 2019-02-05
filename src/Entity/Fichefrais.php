@@ -129,10 +129,5 @@ class Fichefrais
         return $this;
     }
 
-    public function __toString() 
-    {
-        return (string) $this->idvisiteur; 
-    }
-
 
 }

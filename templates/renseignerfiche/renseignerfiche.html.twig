@@ -3,8 +3,17 @@
 {% block title %}New Lignefraisforfait{% endblock %}
 
 {% block body %}
-
-    <h1>Create new LignefraisHorsforfait</h1>
+<div class="row">
+    
+       <div class="col">
+        Create :
+        </div>  
+    
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+    <h1>new LignefraisHorsforfait</h1>
     {{ form_start(form1) }}
     
     {{form_row(form1.idvisiteur, {'value' : app.session.get('visiteur').id}) }}
@@ -13,10 +22,13 @@
       {{form_row(form1.libelle)}}
        {{form_row(form1.date)}}
         {{form_row(form1.montant)}}
+        
         <div id ="message"> </div>
     {{ form_end(form1) }}
 
-    <h1>Create new Lignefraisforfait</h1>
+</div>
+<div class="col">
+    <h1> new Lignefraisforfait</h1>
     {{ form_start(form2) }}
 	
 	{{form_row(form2.idvisiteur, {'value' : app.session.get('visiteur').id}) }}
@@ -25,6 +37,10 @@
     
     {{ form_widget(form2) }}
     {{ form_end(form2) }}
+</div>
+</div>
+</div>
+
         <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {

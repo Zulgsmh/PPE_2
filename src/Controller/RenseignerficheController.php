@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Document;
 use App\Entity\Lignefraisforfait;
 use App\Form\LignefraisforfaitType;
 use App\Entity\Lignefraishorsforfait;
@@ -40,12 +41,40 @@ class RenseignerficheController extends AbstractController
                 dump("okkk");
                 if($form1->isSubmitted() && $form1->isValid()) {
                     $em = $this->getDoctrine()->getManager();
-                   dump($lignefraishorsforfait);
-                    $em->persist($lignefraishorsforfait);
-                    $em->flush();
-                    return $this->redirectToRoute('lignefraishorsforfait_index');
-                }
 
+                    $uploadFile =  $lignefraishorsforfait -> getFichier();
+                dump($uploadFile);
+
+                    // $lignefraisho->getFichier() ;
+                    // generateUniqueFileName() permet de generer une cle unique pour chaque fichier
+                   $fileName =$uploadFile->getClientOriginalName();
+
+                  // var_dump($uploadFile->guessExtension());
+                    // Déplacez le fichier dans le répertoire où les brochures sont stockées dans le dossier web /uploads / documents
+                   // $fileEx =  $uploadFile->getMimeType();
+                   $document = new Document();
+                    $uploadFile->move($this->getParameter('brochures_directory'),$fileName);
+                   $document->setPath($fileName);
+                   $document->setIdvisiteur($lignefraishorsforfait->getIdvisiteur());
+                  
+
+                   $em->persist($document);
+
+                    $lignefraishorsforfaitCopie = new Lignefraishorsforfait();
+                    $lignefraishorsforfaitCopie->setLibelle($lignefraishorsforfait->getLibelle());
+                    $lignefraishorsforfaitCopie->setMois($lignefraishorsforfait->getMois());
+                    $lignefraishorsforfaitCopie->setDate($lignefraishorsforfait->getDate());
+                    $lignefraishorsforfaitCopie->setIdVisiteur($lignefraishorsforfait->getIdVisiteur());
+                    $lignefraishorsforfaitCopie->setMontant($lignefraishorsforfait->getMontant());
+                    $lignefraishorsforfaitCopie->setIddoc($document);
+
+
+
+
+                    $em->persist($lignefraishorsforfaitCopie);
+                    $em->flush();
+                    return $this->redirectToRoute('Renseigner');
+                }
  
             }
 

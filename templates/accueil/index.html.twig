@@ -11,8 +11,15 @@
 <div class="example-wrapper">
     <br>
     <br>
-    <h1>Bienvenue sur le site pour gérer vos fiches de frais</h1>
     <hr>
+    {% if app.session.get('visiteur') is not null %}
+    <h1>Bienvenue sur votre espace</h1>
+    {% endif %}
+    {% if app.session.get('visiteur') is null %}
+    <h1>Bienvenue sur le site pour gérer vos fiches de frais, connectez vous pour acceder à votre espace ! </h1>
+    {% endif %}
+    <hr>
+    
 
 
 </div>

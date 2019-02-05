@@ -22,6 +22,7 @@ class LignefraishorsforfaitType extends AbstractType
             ->add('montant')
             ->add('fichier', FileType::class)
             ->add('idvisiteur')
+            ->add('save',SubmitType::class)
         ;
     }
 

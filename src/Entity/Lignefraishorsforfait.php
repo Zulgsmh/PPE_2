@@ -69,20 +69,6 @@ class Lignefraishorsforfait
      */
     private $idvisiteur;
 
-    private $fichier;
-
-    public function getFichier(): ?string
-    {
-        return $this->fichier;
-    }
-
-    public function setFichier(string $mois): self
-    {
-        $this->fichier = $fichier;
-
-        return $this;
-    }
-
     public function getId(): ?int
     {
         return $this->id;
@@ -159,6 +145,27 @@ class Lignefraishorsforfait
 
         return $this;
     }
+
+
+    private $fichier;
+
+    public function getFichier()
+    {
+        return $this->fichier;
+    }
+
+    public function setFichier($fichier): self
+    {
+        $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    public function __toString() 
+    {
+        return (string) $this->idvisiteur; 
+    }
+
 
 
 }

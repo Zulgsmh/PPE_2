@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Document;
+use App\Entity\Etat;
+use App\Entity\Fichefrais;
 use App\Entity\Lignefraisforfait;
 use App\Form\LignefraisforfaitType;
 use App\Entity\Lignefraishorsforfait;
@@ -21,10 +23,51 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RenseignerficheController extends AbstractController
 {
+
+    public function ajoutFicheFrais($mois,$visiteur,$Date,$Montant,$NbJustificatifs)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+        $repository= $this->getDoctrine()->getRepository(Fichefrais::class);
+        $Fichefrais = $repository->findBy(['mois'=>$mois]);
+           if (empty($Fichefrais))
+           {
+            $repository= $this->getDoctrine()->getRepository(Etat::class);
+            $etat = $repository->findOneBy(['id'=>"CR"]);
+               $Fichefrais = new Fichefrais();
+               $Fichefrais->setMois($mois);
+               $Fichefrais->setMontantvalide($Montant);
+               $Fichefrais->setNbjustificatifs($NbJustificatifs);
+               $Fichefrais->setDateModif($Date);
+               $Fichefrais->setidvisiteur($visiteur);
+                
+               $Fichefrais->setIdEtat($etat);
+
+               $em->persist($Fichefrais);
+               $em->flush();
+
+           }
+           else
+           {
+               $MontantT=$Fichefrais[0]->getMontant()+$Montant;
+               $Fichefrais[0]->setMontant($MontantT);
+
+               $NbJustificatifsT=$Fichefrais[0]->getNbJustificatifs()+$NbJustificatifs;
+               $Fichefrais[0]->setNbJustificatifs($NbJustificatifsT);
+
+               $em->flush();
+
+           }
+        }
+
+   
+
+
+
     /**
      * @Route("/Renseigner", name="Renseigner")
      */
-    public function nouvelleFiche(Request $request ,  SessionInterface $session)
+    public function nouvelleFiche(Request $request ,  SessionInterface $session) //Permet de créer une ligne de frais (forfait ou hors forfait)
     {
         $lignefraishorsforfait = new Lignefraishorsforfait();
         $form1 = $this->createForm(LignefraishorsforfaitType::class, $lignefraishorsforfait);
@@ -67,11 +110,33 @@ class RenseignerficheController extends AbstractController
                     $lignefraishorsforfaitCopie->setIdVisiteur($lignefraishorsforfait->getIdVisiteur());
                     $lignefraishorsforfaitCopie->setMontant($lignefraishorsforfait->getMontant());
                     $lignefraishorsforfaitCopie->setIddoc($document);
-
+                    
+                    
+                    
 
 
 
                     $em->persist($lignefraishorsforfaitCopie);
+
+                    
+
+                   /* $fichefraisCopie = new fichefrais();
+                    $fichefraisCopie->setIdvisiteur($lignefraishorsforfait->getIdvisiteur());
+                    $fichefraisCopie->setMois($lignefraishorsforfait->getMois());
+                    $fichefraisCopie->setNbjustificatifs(1);
+                    $fichefraisCopie->setMontantvalide($lignefraishorsforfait->getMontant());
+                    $fichefraisCopie->setDatemodif($lignefraishorsforfait->getDate());
+                    $fichefraisCopie->setIdetat("CR"); */
+
+                    //CreerFiche($lignefraishorsforfait);
+
+                    //$em->persist($fichefraisCopie);
+                    
+
+                    $this->ajoutFicheFrais($lignefraishorsforfait->getMois(),
+                    $lignefraishorsforfait->getIdvisiteur(),$lignefraishorsforfait->getDate(),
+                    $lignefraishorsforfait->getMontant(),1);
+
                     $em->flush();
                     return $this->redirectToRoute('Renseigner');
                 }

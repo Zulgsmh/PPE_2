@@ -64,6 +64,11 @@ class Fichefrais
      */
     private $idvisiteur;
 
+    public function setMois(?string $mois)
+    {
+        $this->mois = $mois;
+        return $this;
+    }
     public function getMois(): ?string
     {
         return $this->mois;

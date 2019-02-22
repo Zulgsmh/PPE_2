@@ -33,6 +33,15 @@ class Etat
         return $this->id;
     }
 
+    public function setId(?String $id): self
+    {
+        $this->id = $id;
+
+        return $this;
+
+    }
+
+
     public function getLibelle(): ?string
     {
         return $this->libelle;
@@ -45,5 +54,9 @@ class Etat
         return $this;
     }
 
+    public function __toString() 
+    {
+        return (string) $this->id; 
+    }
 
 }
